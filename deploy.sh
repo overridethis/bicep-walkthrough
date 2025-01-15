@@ -4,7 +4,7 @@
 source .env
 
 # deploy vault.
-# ./00-Other/vault/deploy.sh
+./00-Other/vault/deploy.sh
 
 # deploy demos
 echo 'Deploying 01-HelloBicep'
