@@ -1,0 +1,26 @@
+﻿@page
+@using System.Collections
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var prefix = "ENV_";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    <h2>Environment</h2>
+    <ul>
+        @foreach (DictionaryEntry envVar in Environment.GetEnvironmentVariables())
+        {
+            var hasPrefix = envVar.Key?.ToString()?.StartsWith(prefix) ?? false;
+            if (hasPrefix)
+            {
+                <li><strong>@envVar.Key:</strong> @envVar.Value</li>
+            }
+        }
+    </ul>
+</div>
