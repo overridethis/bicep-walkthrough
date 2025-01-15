@@ -6,6 +6,8 @@ Whether you're new to Infrastructure-as-Code or looking to enhance your current 
 # Content
 This repository has some basic examples that will help to showcase Bicep language features, and best practices.
 
+> [Click here for slides!](slides/Bicep_walkthrough_slides.pdf)
+
 # Requirements
 1. Azure Subscription - https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account
 1. Azure CLI - https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli 
@@ -26,9 +28,9 @@ This repository has some basic examples that will help to showcase Bicep languag
    | ENV_SECRET_KEY | Name of secret that will the DB Password used for some scenarios | DBPassword |
    | ENV_SECRET_VALUE | Password to be used when creating Azure SQL Server resources in the demo | [guidelines](https://learn.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver16) |
    | ENV_DB_PASSWORD_SALT | Salt to be used when creating a random password for some MySQL Server resources in the demos. | ¯\\_(ツ)_/¯ |
-   
-   
 
 # Extras
 1. Azure Diagrams - https://azurediagrams.com/
-1. Bicep Playground - https://azure.github.io/bicep/
+2. Azure Naming Guidelines - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
+3. Azure Verified Modules - https://azure.github.io/Azure-Verified-Modules/
+4. Bicep Playground - https://azure.github.io/bicep/
