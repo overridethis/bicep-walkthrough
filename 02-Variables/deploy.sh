@@ -19,4 +19,4 @@ az stack group create \
     --parameters environmentType=$ENV_TYPE prefix=$ENV_PREFIX \
     --deny-settings-mode denyWriteAndDelete \
     --action-on-unmanage detachAll \
-    --yes
+    --yes $1

@@ -1,11 +1,16 @@
+// DEMO 01 - Add Parameters
+// DEMO 02 - Add Variables
+// DEMO 03 - Add App Service Plan, App Service and Lock resources (optional)
+// DEMO 04 - Add Outputs 
+
 @allowed([
   'dev'
   'prod'
 ])
+@description('The environment type (dev, prod)')
 param environmentType string = 'dev'
-param prefix string 
-
-targetScope = 'resourceGroup'
+@description('The prefix to use for all resources')
+param prefix string
 
 var uniqueKey = uniqueString(resourceGroup().id)
 var skuName = environmentType == 'prod' ? 'P2v3' : 'F1'
@@ -24,9 +29,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   }
 }
 
-// Reference (Kind property)
-// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
-  
 resource appServiceApp 'Microsoft.Web/sites@2023-12-01' = {
   name:  '${prefix}-appsvc-${uniqueKey}'
   location: resourceGroup().location
@@ -42,14 +44,6 @@ resource appServiceApp 'Microsoft.Web/sites@2023-12-01' = {
       ]
       linuxFxVersion: 'DOCKER|ghost:latest'
     }
-  }
-}
-
-resource lock 'Microsoft.Authorization/locks@2016-09-01' = {
-  name: '${prefix}-lock-${uniqueKey}'
-  scope: appServiceApp
-  properties: {
-    level: 'CanNotDelete'
   }
 }
 

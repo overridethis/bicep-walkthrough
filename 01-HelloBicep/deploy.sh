@@ -10,8 +10,9 @@ cd "${0%/*}"
 # create az resource group
 az group create --name rg-$ENV_PREFIX-01-dev --location $ENV_LOCATION
 
-# deploy bicep
+# create deployment to resource group
 az deployment group create \
     --name $ENV_PREFIX-demo-01 \
-    --template-file main.bicep \
-    --resource-group rg-$ENV_PREFIX-01-dev $1
+    --resource-group rg-$ENV_PREFIX-01-dev \
+    --template-file main.bicep $1
+

@@ -1,0 +1,85 @@
+{
+    "d02-params": {
+        "prefix": "d02-params",
+        "body": [
+            "@allowed([",
+            "  'dev'",
+            "  'prod'",
+            "])",
+            "param environmentType string = 'dev'",
+            "param prefix string "
+        ],
+        "description": "00-params"
+    },
+        "d02-variables": {
+        "prefix": "d02-variables",
+        "body": [
+            "var uniqueKey = uniqueString(resourceGroup().id)",
+            "var skuName = environmentType == 'prod' ? 'P2v3' : 'F1'",
+            "var skuTier = environmentType == 'prod' ? 'Premium' : 'Standard'"
+        ],
+        "description": "d02-variables"
+    },
+    "d02-appsvcplan": {
+        "prefix": "d02-appsvcplan",
+        "body": [
+            "resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {",
+            "  name: '\\${prefix\\}-appsvcplan-\\${uniqueKey\\}'",
+            "  location: resourceGroup().location",
+            "  kind: 'linux'",
+            "  properties: {",
+            "    reserved: true",
+            "  }",
+            "  sku: {",
+            "    name: skuName",
+            "    tier: skuTier",
+            "  }",
+            "}"
+        ],
+        "description": "d02-appsvcplan"
+    },
+    "d02-appsvc": {
+        "prefix": "d02-appsvc",
+        "body": [
+            "resource appServiceApp 'Microsoft.Web/sites@2023-12-01' = {",
+            "  name:  '\\${prefix\\}-appsvc-\\${uniqueKey\\}'",
+            "  location: resourceGroup().location",
+            "  kind: 'app,linux,container'  ",
+            "  properties: {",
+            "    serverFarmId: appServicePlan.id",
+            "    httpsOnly: true",
+            "    siteConfig: {",
+            "      appSettings: [",
+            "        { name: 'DOCKER_REGISTRY_SERVER_URL', value: 'https://index.docker.io' }",
+            "        { name: 'url', value: 'http://localhost:80' }",
+            "        { name: 'NODE_ENV', value: 'development' }",
+            "      ]",
+            "      linuxFxVersion: 'DOCKER|ghost:latest'",
+            "    }",
+            "  }",
+            "}"
+        ],
+        "description": "d02-appsvc"
+    },
+    "d02-lock": {
+        "prefix": "d02-lock",
+        "body": [
+            "resource lock 'Microsoft.Authorization/locks@2016-09-01' = {",
+            "  name: '\\${prefix\\}-lock-\\${uniqueKey\\}'",
+            "  scope: appServiceApp",
+            "  properties: {",
+            "    level: 'CanNotDelete'",
+            "  }",
+            "}"
+        ],
+        "description": "d02-lock"
+    },
+    "d02-output": {
+        "prefix": "d02-output",
+        "body": [
+            "output appServiceAppName string = appServiceApp.name",
+            "output appServiceAppUrl string = 'https://\\${appServiceApp.properties.defaultHostName\\}'"
+        ],
+        "description": "d02-output"
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "d01-sh-resource-group-create": {
+        "prefix": "d01-sh-resource-group-create",
+        "body": [
+            "az group create --name rg-\\$ENV_PREFIX-01-dev --location \\$ENV_LOCATION"
+        ],
+        "description": "d01-sh-resource-group-create"
+    },
+    "d01-sh-deployment": {
+        "prefix": "d01-sh-deployment-create",
+        "body": [
+            "az deployment group create \\",
+            "    --name \\$ENV_PREFIX-demo-01 \\",
+            "    --resource-group rg-\\$ENV_PREFIX-01-dev \\",
+            "    --template-file main.bicep \\$1"
+        ],
+        "description": "d01-sh-deployment-create"
+    },
+    "d01-bicep": {
+        "prefix": "d01-bicep",
+        "body": [
+            "targetScope = 'resourceGroup'",
+            "",
+            "resource storage 'Microsoft.Storage/storageAccounts@2021-06-01' = {",
+            "  name: 'storage\\${uniqueString(resourceGroup().id)\\}'",
+            "  location: resourceGroup().location",
+            "  kind: 'StorageV2'",
+            "  sku: {",
+            "    name: 'Standard_LRS'",
+            "  }",
+            "}",
+            "",
+            "resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' existing = {",
+            "  parent: storage",
+            "  name: 'default'",
+            "}",
+            "",
+            "resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {",
+            "  parent: blobs",
+            "  name: 'images'",
+            "}"
+        ],
+        "description": "d01-bicep"
+    },
+    "d01-sh-resource-group-delete": {
+        "prefix": "d01-sh-resource-group-delete",
+        "body": [
+            "az group delete --name rg-\\$ENV_PREFIX-01-dev --location \\$ENV_LOCATION --yes"
+        ],
+        "description": "d01-sh-resource-group-delete"
+    },
+    "d01-sh-deployment-delete": {
+        "prefix": "d01-sh-deployment-delete",
+        "body": [
+            "az deployment group delete \\",
+            "    --name \\$ENV_PREFIX-demo-01 \\",
+            "    --resource-group rg-\\$ENV_PREFIX-01-dev"
+        ],
+        "description": "d01-sh-deployment-delete"
+    },
+}

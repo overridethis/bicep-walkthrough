@@ -1,0 +1,49 @@
+{
+    "d03-sh-stack-create": {
+        "prefix": "d03-sh-stack-create",
+        "body": [
+            "az stack sub create \\",
+            "    --name \\$ENV_PREFIX-demo-03 \\",
+            "    --template-file main.bicep \\",
+            "    --location \\$ENV_LOCATION \\",
+            "    --parameters environmentType=\\$ENV_TYPE prefix=\\$ENV_PREFIX \\",
+            "    --deny-settings-mode denyWriteAndDelete \\",
+            "    --action-on-unmanage detachAll \\",
+            "    --yes"
+        ],
+        "description": "d03-sh-stack-create"
+    },
+    "d03-params": {
+        "prefix": "d03-params",
+        "body": [
+            "@allowed([",
+            "  'dev'",
+            "  'prod'",
+            "])",
+            "param environmentType string = 'dev'",
+            "param prefix string "
+        ],
+        "description": "d03-params"
+    },
+    "d03-target-scope": {
+        "prefix": "d03-target-scope",
+        "body": [
+            "targetScope = 'subscription'"
+        ],
+        "description": "d03-target-scope"
+    },
+    "d03-resource-group": {
+    "prefix": "d03-resource-group",
+    "body": [
+        "resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {",
+        "  name: 'rg-${prefix}-03-${environmentType}'",
+        "  location: deployment().location",
+        "  tags: {",
+        "    environment: environmentType",
+        "    prefix: prefix",
+        "  }",
+        "}"
+    ],
+    "description": "d03-resource-group"
+    }
+}
