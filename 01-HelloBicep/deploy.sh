@@ -14,4 +14,4 @@ az group create --name rg-$ENV_PREFIX-01-dev --location $ENV_LOCATION
 az deployment group create \
     --name $ENV_PREFIX-demo-01 \
     --template-file main.bicep \
-    --resource-group rg-$ENV_PREFIX-01-dev
+    --resource-group rg-$ENV_PREFIX-01-dev $1
