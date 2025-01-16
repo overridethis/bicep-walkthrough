@@ -36,7 +36,7 @@
     "prefix": "d03-resource-group",
     "body": [
         "resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {",
-        "  name: 'rg-${prefix}-03-${environmentType}'",
+        "  name: 'rg-\\${prefix}-03-\\${environmentType}'",
         "  location: deployment().location",
         "  tags: {",
         "    environment: environmentType",

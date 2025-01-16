@@ -7,10 +7,12 @@
   'dev'
   'prod'
 ])
-@description('The environment type (dev, prod)')
+@description('The environment type for the resources. (prod, dev)')
 param environmentType string = 'dev'
-@description('The prefix to use for all resources')
+@description('The environment prefix for all resources')
 param prefix string
+
+targetScope = 'resourceGroup'
 
 var uniqueKey = uniqueString(resourceGroup().id)
 var skuName = environmentType == 'prod' ? 'P2v3' : 'F1'

@@ -30,7 +30,8 @@ This repository has some basic examples that will help to showcase Bicep languag
    | ENV_DB_PASSWORD_SALT | Salt to be used when creating a random password for some MySQL Server resources in the demos. | ¯\\_(ツ)_/¯ |
 
 # Extras
+1. Azure Bicep Best Practices - https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/best-practices#resource-definitions
 1. Azure Diagrams - https://azurediagrams.com/
-2. Azure Naming Guidelines - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
-3. Azure Verified Modules - https://azure.github.io/Azure-Verified-Modules/
-4. Bicep Playground - https://azure.github.io/bicep/
+1. Azure Resource Naming Guidelines - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
+1. Azure Verified Modules - https://azure.github.io/Azure-Verified-Modules/
+1. Bicep Playground - https://azure.github.io/bicep/

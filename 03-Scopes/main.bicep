@@ -1,3 +1,6 @@
+// DEMO - Scopes
+// DEMO - Optional (loop over array for multiple regions)
+
 @allowed([
   'dev'
   'prod'

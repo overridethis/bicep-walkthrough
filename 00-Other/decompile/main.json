@@ -4,14 +4,14 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.32.4.45862",
-      "templateHash": "915627786721090601"
+      "version": "0.32.96.61131",
+      "templateHash": "14602228995990872340"
     }
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2021-06-01",
       "name": "[format('storage{0}', uniqueString(resourceGroup().id))]",
       "location": "[resourceGroup().location]",
       "kind": "StorageV2",
@@ -20,22 +20,15 @@
       }
     },
     {
-      "type": "Microsoft.Storage/storageAccounts/blobServices",
-      "apiVersion": "2021-04-01",
-      "name": "[format('{0}/{1}', format('storage{0}', uniqueString(resourceGroup().id)), 'default')]",
+      "copy": {
+        "name": "container",
+        "count": "[length(range(0, 3))]"
+      },
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2023-05-01",
+      "name": "[format('{0}/{1}/{2}', format('storage{0}', uniqueString(resourceGroup().id)), 'default', format('images{0}', range(0, 3)[copyIndex()]))]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', format('storage{0}', uniqueString(resourceGroup().id)))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-      "apiVersion": "2021-04-01",
-      "name": "[format('{0}/{1}/{2}', format('storage{0}', uniqueString(resourceGroup().id)), 'default', 'container')]",
-      "properties": {
-        "publicAccess": "None"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', format('storage{0}', uniqueString(resourceGroup().id)), 'default')]"
       ]
     }
   ]

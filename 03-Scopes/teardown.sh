@@ -9,5 +9,5 @@ cd "${0%/*}"
 # deploy bicep
 az stack sub delete \
     --name $ENV_PREFIX-demo-03 \
-    --action-on-unmanage deleteAll \
+    --action-on-unmanage deleteResources \
     --yes
